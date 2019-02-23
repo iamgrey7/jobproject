@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Carbon\carbon;
 
 class RegisterController extends Controller
 {
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -51,8 +52,12 @@ class RegisterController extends Controller
             'username' => 'required|string|max:255|unique:users,username',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'string|max:255',
+            'dob' => 'required|date|before:'.Carbon::now()->subYears(17),
         ]);
     }
+ 
 
     /**
      * Create a new user instance after a valid registration.
@@ -66,8 +71,13 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'dob' => $data['dob'],
+            'role_id' => '2',
             'status' => 0,
-            'path_foto' => null,
+            'path_foto' => '',
         ]);
+        
     }
 }

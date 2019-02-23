@@ -21,8 +21,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $role = $request->user()->role;
+
+        // single role diff homepage 
+        if ($request->user()->hasRole('admin')) {
+            return redirect()->route('admin.index')            
+            ->with('role', $role);
+        }
+        elseif ($request->user()->hasRole('user')) {
+            return redirect()->route('user.index')
+            ->with('role', $role);
+        } else {
+            return view('home');
+        }       
     }
 }

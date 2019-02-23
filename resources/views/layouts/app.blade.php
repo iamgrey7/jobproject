@@ -74,7 +74,11 @@
         @yield('content')
     </div>
 
-    <!-- Scripts -->
+    {{-- Script --}}
     <script src="{{ asset('js/app.js') }}"></script>
+
+    {{-- include script dari tiap halaman --}}
+    @yield('script')
+
 </body>
 </html>

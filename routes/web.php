@@ -11,11 +11,24 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-Auth::routes();
-
+//homepage website
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//Standar authentication routes
+Auth::routes();
+
+//check role route user
+Route::group(['middleware' => ['auth','role:user']], function () {
+    Route::resource('user', 'UserController'); 
+});
+
+//check role route admin
+Route::group(['middleware' => ['auth','role:admin']], function () {
+    Route::resource('admin', 'AdminController'); 
+});
+
+
+
