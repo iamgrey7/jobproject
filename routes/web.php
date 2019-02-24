@@ -21,13 +21,24 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 //check role route user
-Route::group(['middleware' => ['auth','role:user']], function () {
-    Route::resource('user', 'UserController'); 
+Route::group(['middleware' => ['auth','role:user','profile']], function () {
+    //Route::resource('users', 'UserController');     
+    Route::get('users/{id}/profile', 'UserController@showFormProfile')
+        ->name('users.profile-form');
+    Route::post('users/{id}/profile', 'UserController@storeProfile')
+         ->name('users.profile-store'); 
+    Route::get('users/{id}/profile/info', 'UserController@showProfile')
+        ->name('users.profile-show');   
+    Route::get('users/{id}/home', 'UserController@index')
+        ->name('users.index');
+    Route::put('users/{id}/upload', 'UserController@uploadCV')
+        ->name('users.upload');
 });
 
 //check role route admin
 Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::resource('admin', 'AdminController'); 
+    Route::resource('user-management', 'AdminController');
 });
 
 

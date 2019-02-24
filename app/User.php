@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Role;
+use App\UserProfile;
 
 class User extends Authenticatable
 {
@@ -35,6 +36,11 @@ class User extends Authenticatable
     public function role() 
     { 
         return $this->belongsTo(Role::class); 
+    }
+
+    public function profile() 
+    { 
+        return $this->hasOne(UserProfile::class, 'user_id'); 
     }
 
     //function pengecekan role user

@@ -52,9 +52,10 @@ class RegisterController extends Controller
             'username' => 'required|string|max:255|unique:users,username',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'string|max:255',
-            'dob' => 'required|date|before:'.Carbon::now()->subYears(17),
+            // 'first_name' => 'required|string|max:255',
+            // 'last_name' => 'string|max:255',
+            // 'dob' => 'required|date|before:'.Carbon::now()->subYears(17),
+            'dob' => 'required|date|before:17 years ago',
         ]);
     }
  
@@ -65,18 +66,19 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(array $data) //array $data
     {
-        return User::create([
+        
+        return         
+        User::create([
             'username' => $data['username'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
+            'password' => bcrypt($data['password']),            
             'dob' => $data['dob'],
             'role_id' => '2',
             'status' => 0,
-            'path_foto' => '',
+            'has_filled_profile' => 'false',
+            'path_foto' => '',            
         ]);
         
     }

@@ -4,21 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\UserProfile;
+
 class AdminController extends Controller
 {
-
-        // public function __construct() { 
-        //     $this->middleware('auth');
-        //     $this->middleware('manager');
-        // }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.index');
+        $users = UserProfile::all();
+        return view('admin.index', ['users' => $users]); 
     }
 
     /**

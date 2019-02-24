@@ -18,11 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->date('dob');
             $table->integer('status')->default('0');
             $table->integer('role_id');
-            $table->string('first_name');
-            $table->string('last_name')->nullable();
-            $table->date('dob');
+            $table->boolean('has_filled_profile')->default(false);
             $table->string('path_foto')->nullable();
             $table->rememberToken();
             $table->timestamps();
