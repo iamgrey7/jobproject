@@ -37,8 +37,12 @@ Route::group(['middleware' => ['auth','role:user','profile']], function () {
 
 //check role route admin
 Route::group(['middleware' => ['auth','role:admin']], function () {
-    Route::resource('admin', 'AdminController'); 
-    Route::resource('user-management', 'AdminController');
+    Route::resource('user-management', 'UserController');
+    Route::get('user-management', 'UserController@userManage')
+        ->name('user-management.manage');
+    Route::resource('admin', 'AdminController');
+    
+
 });
 
 

@@ -5,22 +5,51 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use DB;
 
 use App\UserProfile;
 use App\User;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+  
     public function index()
     {
         $id = Auth::user()->id;
         return view('user.index')->with('id', $id);
+    }
+
+    public function userManage(Request $request)
+    {        
+        // $users = DB::table('users')
+        //     ->leftJoin('roles', 'users.role_id', '=', 'roles.id')            
+        //     ->get();        
+        // return view('user.manage')->with('users', $users);
+
+        if($request->ajax()) { 
+            $users = User::where(
+                'username', 'like', '%'.$request->keywords.'%') 
+                ->orWhere('email', 'like', '%'.$request->keywords.'%');                      
+            $users = $users->paginate(10);
+
+            $request->keywords == '' ? $keywords = '' : $keywords = $request->keywords; 
+            
+            $view = (String)view('user.list') 
+                ->with('users', $users)
+                ->render(); 
+            
+            return response()->json([
+                'view' => $view,                 
+                'keywords' => $keywords, 
+                'test' => $users,
+                'status' => 'success']); 
+        } else { 
+            $users = DB::table('users')
+                ->leftJoin('roles', 'users.role_id', '=', 'roles.id')
+                ->paginate(10);
+            return view('user.manage')->with('users', $users); 
+        }
     }
 
 
