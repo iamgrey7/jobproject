@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\UserProfile;
 
 
 class HomeController extends Controller
@@ -16,16 +17,18 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function home()
+    {
+        return view('home.homepage');
+    }
+
     public function index(Request $request)
     {
+        $this->middleware('auth');
+        
         $role = $request->user()->role;
 
         // if role = admin
@@ -36,19 +39,24 @@ class HomeController extends Controller
         // if role = user 
         } elseif ($request->user()->hasRole('user')) {
             
-            //jika user belum mengisi profil dan upload cv 
-            $id = $request->user()->id;
-            $user = User::find($id);
-
-            if ($user->has_filled_profile == false) {
-                return redirect()->route('users.profile-form', $id);  
-
-            } elseif ($user->has_filled_profile == true) {
+            //jika user belum mengisi profil
+            $id = $request->user()->id; 
+            $email = $request->user()->email;
+            $user = User::leftJoin('user_profiles', 'users.id', 
+                '=', 'user_profiles.user_id', 'left_outer')
+                ->where('email', '=', $email)
+                ->getQuery()
+                ->first();
+            if ($user->first_name == NULL) {
+                return redirect()->route('users.profile-form', $id);                  
+            } elseif ($user->first_name !== NULL) {
                 return redirect()->route('users.index', $user->id);                    
-            }            
-
+            }
+            
         } else {
-            return redirect()->route('home');
+            return redirect('home.homepage');
         }       
     }
+
+
 }

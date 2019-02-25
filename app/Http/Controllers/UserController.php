@@ -16,8 +16,17 @@ class UserController extends Controller
   
     public function index()
     {
-        $id = Auth::user()->id;
-        return view('user.index')->with('id', $id);
+        $id = Auth::user()->id;      
+        $users =  User::join('user_profiles', 'users.id', '=', 'user_profiles.user_id')
+                        ->join('resume_statuses', 'user_profiles.cv_status', 
+                             '=', 'resume_statuses.id')
+                        ->where('user_id','=',$id)
+                        ->getQuery() 
+                        ->first();
+
+        return view('user.index')
+            ->with('users', $users)
+            ->with('id', $id);        
     }
 
     public function userManage(Request $request)
@@ -65,9 +74,9 @@ class UserController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+       
     }
 
 
@@ -88,6 +97,12 @@ class UserController extends Controller
         //
     }
 
+    public function showProfile($id)
+    {
+        return view('user.profile')
+        ->with('id', $id);
+    }
+
     public function showFormProfile($id)
     {        
         return view('user.form-detail')
@@ -96,6 +111,21 @@ class UserController extends Controller
 
     public function storeProfile(Request $request)
     {
+        $messages = [
+            'required' => 'Kolom ini harus diisi',            
+        ];
+        $rules = [            
+            'first_name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ];
+
+        $validation = Validator::make($request->all(), $rules, $messages);
+        if($validation->fails()) {
+            return redirect()->back()->withInput()
+            ->withErrors($validation);
+        }
+
         $id = $request->id;
         UserProfile::create([
             'user_id' => $id,
@@ -106,10 +136,7 @@ class UserController extends Controller
             'address' => $request->address,  
         ]);
 
-        // $user = User::find($id);
-        // $user->has_filled_profile = true;
-        // $user->save();
-        // dd($user);
+        return redirect()->route('users.index', $id);       
     }
 
     public function changeFilled($id) {

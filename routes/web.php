@@ -13,8 +13,11 @@
 
 
 //homepage website
-Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/homepage', 'HomeController@home')->name('guest.home');
+Route::get('/', 'HomeController@home')->name('guest.home');
 
 
 //Standar authentication routes
@@ -29,7 +32,7 @@ Route::group(['middleware' => ['auth','role:user','profile']], function () {
          ->name('users.profile-store'); 
     Route::get('users/{id}/profile/info', 'UserController@showProfile')
         ->name('users.profile-show');   
-    Route::get('users/{id}/home', 'UserController@index')
+    Route::get('users/home', 'UserController@index')
         ->name('users.index');
     Route::put('users/{id}/upload', 'UserController@uploadCV')
         ->name('users.upload');
@@ -40,6 +43,10 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::resource('user-management', 'UserController');
     Route::get('user-management', 'UserController@userManage')
         ->name('user-management.manage');
+
+    Route::get('applicant-profile/{id}', 'UserController@showProfile')
+    ->name('applicant.profile');
+    
     Route::resource('admin', 'AdminController');
     
 

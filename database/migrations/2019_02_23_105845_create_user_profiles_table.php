@@ -22,7 +22,7 @@ class CreateUserProfilesTable extends Migration
            $table->integer('phone');
            $table->string('address');            
            $table->string('cv_path')->nullable();
-           $table->string('cv_status')->default('Unread');           
+           $table->integer('cv_status')->default('1');           
            $table->timestamps();                      
         });
     }

@@ -92,6 +92,11 @@
         </div>
     </div>
 </div>
+
+{{-- modal untuk login --}}
+@include('auth.login')
+
+
 @endsection
 
 

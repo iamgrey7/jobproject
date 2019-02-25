@@ -21,14 +21,14 @@ class CheckUserProfile
         // if ($request->route()->named('users.profile-form'))
         // $user->has_filled_profile == false && 
 
-        $user = Auth::user();
-        $route = Route::currentRouteName();
+        // $user = Auth::user();
+        // $route = Route::currentRouteName();
        
-        if($route !== "users.profile-form") {
-            if ($user->has_filled_profile == false) {
-                return redirect()->route('users.profile-form', $user->id); 
-            }             
-        }
+        // if($route !== "users.profile-form") {
+        //     if ($user->has_filled_profile == false) {
+        //         return redirect()->route('users.profile-form', $user->id); 
+        //     }             
+        // }
         return $next($request);
 
     }

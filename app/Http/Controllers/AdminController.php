@@ -16,7 +16,14 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $users = UserProfile::all();
+        $users = 
+            UserProfile::join('resume_statuses', 'user_profiles.cv_status', 
+                '=', 'resume_statuses.id')
+            ->where('cv_status', '=',"1" )
+            ->orWhere('cv_status', '=',"2" )
+            ->getQuery()
+            ->get();
+       
         return view('admin.index', ['users' => $users]); 
     }
 

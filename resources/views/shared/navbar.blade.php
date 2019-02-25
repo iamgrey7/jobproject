@@ -11,8 +11,11 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand" href="{{ route('guest.home') }}">
+                    <img src="img/1.jpg" height='50px'>                   
+                </a>
+                <a class="navbar-brand" href="{{ route('guest.home') }}">        
+                    Technolo<span style="color:orange">Geek</span>
                 </a>
             </div>
 
@@ -25,11 +28,16 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
+
+                        
                     @guest
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
+                        {{-- <li><a href="{{ route('login') }}">Login</a></li> --}}
+                        <li><a href="{{ route('guest.home') }}">Home</a></li>
+                        <li><a href=#loginModal class="login-modal" data-toggle="modal" 
+                            data-target="#loginModal">Login</a>                       
+                        <li><a href="{{ route('register') }}">Daftar</a></li>
                     @else
-                     
+                    <li><a href="{{ route('home') }}">Home</a></li>                           
                         @if(Auth::user()->role_id == '1')
                             <li><a href="{{ route('user-management.manage') }}">Kelola User</a></li>
                         @endif
