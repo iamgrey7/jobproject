@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-<header class="bg-none mb-5">
+<header>
     <img src="img/2.jpg" width="100%">
 </header>
       

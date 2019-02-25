@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\UserProfile;
+use App\User;
 
 class AdminController extends Controller
 {
@@ -92,4 +94,43 @@ class AdminController extends Controller
     {
         //
     }
+
+    public function showProfile($id)
+    {   
+        $user =  User::find($id);
+        $profile = UserProfile::where('user_id','=', $id)
+            ->join('users', 'user_profiles.user_id', '=', 'users.id')
+            ->getQuery()
+            ->first();
+
+        return view('admin.cv-show')
+            ->with('user', $profile)
+            ->with('id', $id); 
+    }
+
+    public function download($file)
+    {        
+        // $filename = substr($file, 8);
+        // $path = "uploads/cv/$filename";
+        // $path = public_path()."/uploads/cv/".$filename;
+        // if (file_exists($path)) {            
+        //     return Response::download($path, $filename);
+        // } else {            
+        //     exit('Requested file does not exist on our server!');
+        // }
+        // return dd($path);
+
+        // $path = public_path('uploads/cv/'.$filename);
+        return response()->download($file);
+    }
+
+    // public function download($filename = '')
+    // {        
+    //     $file_path = storage_path() . "/app/public/cv/".$filename;        
+    //     if ( file_exists( $file_path ) ) {            
+    //         return Response::download( $file_path, $filename);
+    //     } else {            
+    //         exit( 'Requested file does not exist on our server!' );
+    //     }
+    // }
 }

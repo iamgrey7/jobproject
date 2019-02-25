@@ -32,8 +32,7 @@
                             <th>Username</th>
                             <th>E-Mail</th>
                             <th>Hak Akses</th>
-                            <th>Status</th>
-                            <th>Upload CV</th>
+                            <th>Status</th>                            
                             <th>Waktu Upload</th>
                             <th>Operasi</th>
                         </tr>

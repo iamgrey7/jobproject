@@ -19,8 +19,7 @@ class UsersTableSeeder extends Seeder
         $admin->password = bcrypt('admin');
         $admin->dob = '2019/01/01';
         $admin->status = '0';
-        $admin->role_id = '1';
-        $admin->has_filled_profile = true;
+        $admin->role_id = '1';        
         $admin->path_foto = '';
         $admin->save();
 
@@ -30,8 +29,7 @@ class UsersTableSeeder extends Seeder
         $grey->password = bcrypt('admin');
         $grey->dob = '2019/01/01';
         $grey->status = '0';
-        $grey->role_id = '2';
-        $grey->has_filled_profile = true;
+        $grey->role_id = '2';        
         $grey->path_foto = '';
         $grey->save(); 
         
@@ -41,8 +39,7 @@ class UsersTableSeeder extends Seeder
         $user->password = bcrypt('admin');
         $user->dob = '2019/01/01';
         $user->status = '0';
-        $user->role_id = '2';
-        $user->has_filled_profile = false;
+        $user->role_id = '2';      
         $user->path_foto = '';
         $user->save();  
     }

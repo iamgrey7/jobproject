@@ -15,16 +15,15 @@
                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', 
                     $user->updated_at)->diffForHumans() }}
                 </td>
-                <td>
-                    <button id="btn-proses" class="btn btn-primary" 
+                <td>                    
+                    {{-- <button id="btn-proses" class="btn btn-primary" 
                        href={{ route('applicant.profile', $user->id) }}>
                         <i class="fa fa-file-text" aria-hidden="true"></i> Proses
-                    </button>
-                    {{-- <button id="btn-proses" class="btn btn-primary" href={{ view('user.profile') }}> --}}
-                    
-                     {{-- <i class="fa fa-file-text" aria-hidden="true"></i> Proses
-                 </button>                        --}}
-                </td>
+                    </button>     
+                                   --}}
+                <a class="btn btn-primary" type="button" href={{ route('applicant.profile', $user->user_id) }}>
+                    <i class="fa fa-file-text"></i> Proses</a>
+            </td>
             </tr>
         @endforeach
         </div>

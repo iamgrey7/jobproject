@@ -19,9 +19,7 @@ class UserProfileTableSeeder extends Seeder
         $grey->last_name = 'Yudanegara';
         $grey->gender = 'Pria';
         $grey->phone = '0899';
-        $grey->address = 'Banjaran';        
-        // $grey->cv_path = NULL; 
-        // $grey->cv_status = 'Unread'; 
+        $grey->address = 'Banjaran'; 
         $grey->save();  
     }
 }

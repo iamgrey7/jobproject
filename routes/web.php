@@ -40,15 +40,25 @@ Route::group(['middleware' => ['auth','role:user','profile']], function () {
 
 //check role route admin
 Route::group(['middleware' => ['auth','role:admin']], function () {
-    Route::resource('user-management', 'UserController');
+
+    Route::get('dashboard', 'AdminController@index')
+        ->name('admin.index');
+    
     Route::get('user-management', 'UserController@userManage')
         ->name('user-management.manage');
 
-    Route::get('applicant-profile/{id}', 'UserController@showProfile')
+    Route::get('applicant-profile/{id}', 'AdminController@showProfile')
     ->name('applicant.profile');
+
+    // Route::get('/uploads/cv/{file}', function ($file='') {
+    //     return response()->download(storage_path('uploads/cv/'.$file)); 
+    // });
+
+    Route::get('/download/{file}', 'AdminController@download')
+        ->name('download.cv');
     
-    Route::resource('admin', 'AdminController');
-    
+    // Route::resource('admin', 'AdminController');
+    // Route::resource('user-management', 'UserController');
 
 });
 

@@ -99,7 +99,7 @@ class UserController extends Controller
 
     public function showProfile($id)
     {
-        return view('user.profile')
+        return redirect()->view('user.profile')
         ->with('id', $id);
     }
 
@@ -165,7 +165,7 @@ class UserController extends Controller
         $profile = UserProfile::where('user_id', '=', $id)->first();
         if($request->hasFile('upload_cv')) {
             $file = $request->file('upload_cv');
-            $destination_path = 'uploads/';
+            $destination_path = 'uploads/cv/';
             $filename = str_random(6).'_'.$profile->first_name.'_'.$profile->last_name.'.pdf';
             $file->move($destination_path, $filename); 
             $file = $destination_path.$filename;

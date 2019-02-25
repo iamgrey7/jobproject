@@ -6,8 +6,7 @@
                 <td>{{$user->username}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->role_name}}</td>
-                <td>{{$user->status}}</td>
-                <td>{{$user->has_filled_profile}}</td>
+                <td>{{$user->status}}</td>                
 
                 {{-- <td class="text-center"><input type="checkbox" class="permanent" data-id="{{$employee->id}}" @if ($employee->is_permanent) checked @endif></td> --}}
                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', 
