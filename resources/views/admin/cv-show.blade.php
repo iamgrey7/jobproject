@@ -33,24 +33,19 @@
 
             <div class="panel-footer" >
                 <div class="container">
-                    {{ csrf_field() }}
+                    {{-- {{ csrf_field() }} --}}
                     <input type="hidden" id="user_id" value={{ $user->user_id }}>
-                    {{-- <a href={{ route('download.cv', $user->cv_path) }} 
-                        type="button" class="btn btn-warning">
-                        <i class="fa fa-download"></i> Download CV</a> --}}                    
-                                       
+                              
                     <a href={{ asset($user->cv_path) }} 
-                        type="button" class="btn btn-warning" download>
+                        type="button" class="btn btn-warning">
                         <i class="fa fa-download"></i> Download CV</a>
 
                     <a href="" id="btnAccept" type="button" class="btnAccept btn btn-success">
-                    <i class="fa fa-check"></i> Acc Lamaran</a>
+                        <i class="fa fa-check"></i> Acc Lamaran</a>
 
                     <a href="" id="btnReject" type="button" class="btnReject btn btn-danger">
-                    <i class="fa fa-times"></i> Reject Lamaran</a>
+                        <i class="fa fa-times"></i> Reject Lamaran</a>
 
-                    <button id="btnAccept2" class="btn btn-success">ACC2</button>
-                 
                 </div>                
             </div>                 
         </div>
@@ -66,7 +61,7 @@
                 <div class="panel-body">                
                     <div class="container">
                         
-                        {{ asset($user->path_foto) }}
+                        {{ public_path('uploads/cv/cv.pdf') }}
                             
                     </div>                
                 </div>                    
@@ -118,8 +113,9 @@
 <script>
 $(document).ready(function(){
 
-    $('.btnAccept').on('click', function(){
-        id = $('#user_id').val() ;        
+    id = $('#user_id').val() ; 
+
+    $('.btnAccept').on('click', function(){               
         $.ajax({
             type: 'POST',
             url: "{{ URL::route('changeStatusCV') }}",
@@ -134,8 +130,7 @@ $(document).ready(function(){
         });
     });  
 
-    $('.btnReject').on('click', function(){
-        id = $('#user_id').val() ;        
+    $('.btnReject').on('click', function(){                
         $.ajax({
             type: 'POST',
             url: "{{ URL::route('changeStatusCV') }}",
@@ -148,7 +143,10 @@ $(document).ready(function(){
                 //
             },
         });
-    });    
+    }); 
+
+
+
 
 
 

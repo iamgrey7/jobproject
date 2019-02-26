@@ -122,34 +122,19 @@ class AdminController extends Controller
         return response()->json();
     }
 
-    public function changeStatusWORK(Request $request) 
+    public function download(Request $request)
     {        
-        $id = $request->input('id');
-        $status = $request->input('status');
+        $path = $request->input('path');
 
-        $user = User::find($id)
-            ->update([
-                'status' => $status 
-            ]);
+        return response()->download(public_path($path));
+
+        // $path = '../storage/app/cv.pdf';
+        // // $name = basename($file);
+        // $name = 'cv.pdf';
+        // return response()->download($file, $name);   
         
-        return response()->json();
-    }
-
-
-    public function download($file)
-    {        
-         
-        $filename = substr($file, 11);
-        $path = asset($filename);
         
-        if (file_exists($path))
-        {           
-            return Storage::download($path, $filename);            
-        }
-        else
-        {            
-            exit('Requested file does not exist on our server!');
-        }
+        // return Storage::download('cv.pdf', 'cv.pdf');
     }
 
     // public function download($file)

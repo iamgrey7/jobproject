@@ -50,21 +50,13 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::get('applicant-profile/{id}', 'AdminController@showProfile')
     ->name('applicant.profile');
 
-    // Route::get('/uploads/cv/{file}', function ($file='') {
-    //     return response()->download(storage_path('uploads/cv/'.$file)); 
-    // });
-
-    Route::post('/admin/changeStatus', array(
-        'as' => 'changeStatusWORK', 
-        'uses' => 'AdminController@changeStatus'
-    ));
-
-
     Route::post('admin/change-status', 'AdminController@changeStatusCV')
-        ->name('changeStatusCV');  
+        ->name('changeStatusCV');
 
-    Route::get('/download/{file}', 'AdminController@download')
+    Route::get('download/{file}', 'AdminController@download')
         ->name('download.cv');
+
+
     
     // Route::resource('admin', 'AdminController');
     // Route::resource('user-management', 'UserController');
