@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
 
             {{-- tampilkan upload jika belum upload cv atau reject --}}
-            @if($users->cv_path == NULL)
+            @if($users->cv_path == NULL || $users->cv_status == "4")
             <div class="panel panel-default">
                 <div class="panel-heading">Upload CV</div>
 

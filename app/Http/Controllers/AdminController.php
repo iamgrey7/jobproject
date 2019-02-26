@@ -106,31 +106,66 @@ class AdminController extends Controller
         return view('admin.cv-show')
             ->with('user', $profile)
             ->with('id', $id); 
+        
     }
+
+    public function changeStatusCV(Request $request) 
+    {        
+        $id = $request->input('id');
+        $status = $request->input('status');
+
+        $user = UserProfile::where('user_id', '=', $id)
+            ->update([
+                'cv_status' => "$status" 
+            ]);
+        
+        return response()->json();
+    }
+
+    public function changeStatusWORK(Request $request) 
+    {        
+        $id = $request->input('id');
+        $status = $request->input('status');
+
+        $user = User::find($id)
+            ->update([
+                'status' => $status 
+            ]);
+        
+        return response()->json();
+    }
+
 
     public function download($file)
     {        
-        // $filename = substr($file, 8);
-        // $path = "uploads/cv/$filename";
-        // $path = public_path()."/uploads/cv/".$filename;
-        // if (file_exists($path)) {            
-        //     return Response::download($path, $filename);
-        // } else {            
-        //     exit('Requested file does not exist on our server!');
-        // }
-        // return dd($path);
-
-        // $path = public_path('uploads/cv/'.$filename);
-        return response()->download($file);
+         
+        $filename = substr($file, 11);
+        $path = asset($filename);
+        
+        if (file_exists($path))
+        {           
+            return Storage::download($path, $filename);            
+        }
+        else
+        {            
+            exit('Requested file does not exist on our server!');
+        }
     }
 
-    // public function download($filename = '')
+    // public function download($file)
     // {        
-    //     $file_path = storage_path() . "/app/public/cv/".$filename;        
-    //     if ( file_exists( $file_path ) ) {            
-    //         return Response::download( $file_path, $filename);
-    //     } else {            
-    //         exit( 'Requested file does not exist on our server!' );
-    //     }
+    //     // $filename = substr($file, 8);
+    //     // $path = "uploads/cv/$filename";
+    //     // $path = public_path()."/uploads/cv/".$filename;
+    //     // if (file_exists($path)) {            
+    //     //     return Response::download($path, $filename);
+    //     // } else {            
+    //     //     exit('Requested file does not exist on our server!');
+    //     // }
+    //     // return dd($path);
+
+    //     // $path = public_path('uploads/cv/'.$filename);
+    //     // return response()->file(public_path('/uploads/'.$file));
+    //     // return Storage::disk('public')->download($file->cv_path);
     // }
 }

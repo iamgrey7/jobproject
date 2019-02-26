@@ -19,12 +19,13 @@
                 <div class="container">
 
                     <div class="col-md-2">
-                        <img src="img/2.jpg">
+                        <img src={{ asset($user->path_foto) }}
+                        height="150px" width="auto">
                     </div>
                     <div class="col-md-10">
-                        <h4>{{ $user->first_name}} {{$user->last_name}}</h4>
-                        <h5>{{ $user->email }}</h5>
-                        <h5>{{ $user->address }}</h5>
+                        <h3>{{ $user->first_name}} {{$user->last_name}}</h3>
+                        <h5><i class="fa fa-envelope"></i> {{ $user->email }}</h5>
+                        <h5><i class="fa fa-map-marker"></i> {{ $user->address }}</h5>
                     </div>
 
                 </div>                
@@ -32,19 +33,24 @@
 
             <div class="panel-footer" >
                 <div class="container">
-                    <a href={{ route('download.cv', $user->cv_path) }} 
+                    {{ csrf_field() }}
+                    <input type="hidden" id="user_id" value={{ $user->user_id }}>
+                    {{-- <a href={{ route('download.cv', $user->cv_path) }} 
                         type="button" class="btn btn-warning">
+                        <i class="fa fa-download"></i> Download CV</a> --}}                    
+                                       
+                    <a href={{ asset($user->cv_path) }} 
+                        type="button" class="btn btn-warning" download>
                         <i class="fa fa-download"></i> Download CV</a>
-                    <a href="" type="button" class="btn btn-success">
-                        <i class="fa fa-check"></i> Acc Lamaran</a>
-                    <a href="" type="button" class="btn btn-danger">
-                        <i class="fa fa-times"></i> Reject Lamaran</a>
 
-                    {{-- <a href={{ route('download.cv', substr($user->cv_path, 8)) }} 
-                    type="button" class="btn btn-warning">
-                    <i class="fa fa-download"></i> Download CV</a> --}}
-                    {{-- <a href="{{ URL::to($user->cv_path) }}" 
-                    target="_blank">{{ $user->cv_path }}</a> --}}
+                    <a href="" id="btnAccept" type="button" class="btnAccept btn btn-success">
+                    <i class="fa fa-check"></i> Acc Lamaran</a>
+
+                    <a href="" id="btnReject" type="button" class="btnReject btn btn-danger">
+                    <i class="fa fa-times"></i> Reject Lamaran</a>
+
+                    <button id="btnAccept2" class="btn btn-success">ACC2</button>
+                 
                 </div>                
             </div>                 
         </div>
@@ -60,7 +66,7 @@
                 <div class="panel-body">                
                     <div class="container">
                         
-                            
+                        {{ asset($user->path_foto) }}
                             
                     </div>                
                 </div>                    
@@ -110,7 +116,27 @@
 
 @section('script')
 <script>
-    
+$(document).ready(function(){    ;
+    $('.btnReject').on('click', function(){
+        id = $('#user_id').val() ;        
+        $.ajax({
+            type: 'POST',
+            url: "{{ URL::route('changeStatusCV') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': id, 
+                'status' : 4,               
+            },
+            success: function(data) {
+                //
+            },
+        });
+    });    
+
+
+
+
+});
 </script>
 
 @endsection

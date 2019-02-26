@@ -12,7 +12,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ route('guest.home') }}">
-                    <img src="img/1.jpg" height='50px'>                   
+                    <img src={{ asset('img/1.jpg')}} height='50px'>                   
                 </a>
                 <a class="navbar-brand" href="{{ route('guest.home') }}">        
                     Technolo<span style="color:orange">Geek</span>

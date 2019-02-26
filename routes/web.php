@@ -54,6 +54,15 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     //     return response()->download(storage_path('uploads/cv/'.$file)); 
     // });
 
+    Route::post('/admin/changeStatus', array(
+        'as' => 'changeStatusWORK', 
+        'uses' => 'AdminController@changeStatus'
+    ));
+
+
+    Route::post('admin/change-status', 'AdminController@changeStatusCV')
+        ->name('changeStatusCV');  
+
     Route::get('/download/{file}', 'AdminController@download')
         ->name('download.cv');
     

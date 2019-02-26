@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use DB;
 
 use App\UserProfile;
@@ -168,7 +169,7 @@ class UserController extends Controller
             $destination_path = 'uploads/cv/';
             $filename = str_random(6).'_'.$profile->first_name.'_'.$profile->last_name.'.pdf';
             $file->move($destination_path, $filename); 
-            $file = $destination_path.$filename;
+            $file = $destination_path.$filename;  
         } else {
             $file = NULL;
         }
