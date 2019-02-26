@@ -116,7 +116,24 @@
 
 @section('script')
 <script>
-$(document).ready(function(){    ;
+$(document).ready(function(){
+
+    $('.btnAccept').on('click', function(){
+        id = $('#user_id').val() ;        
+        $.ajax({
+            type: 'POST',
+            url: "{{ URL::route('changeStatusCV') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': id, 
+                'status' : 3,               
+            },
+            success: function(data) {
+                //
+            },
+        });
+    });  
+
     $('.btnReject').on('click', function(){
         id = $('#user_id').val() ;        
         $.ajax({
