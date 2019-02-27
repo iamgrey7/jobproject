@@ -13,32 +13,24 @@
 
 
 //homepage website
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/homepage', 'HomeController@home')->name('guest.home');
-Route::get('/', 'HomeController@home')->name('guest.home');
-
-
-//Standar authentication routes
+//Standard authentication routes
 Auth::routes();
 
 //check role route user
-Route::group(['middleware' => ['auth','role:user','profile']], function () {
-    //Route::resource('users', 'UserController');     
-    Route::get('users/{id}/profile', 'UserController@showFormProfile')
-        ->name('users.profile-form');
+Route::group(['middleware' => ['auth','role:user']], function () {
+     
+   
+    Route::post('users/detail', 'ApplicantController@storeProfile')
+         ->name('profile.store'); 
 
-    Route::post('users/{id}/profile', 'UserController@storeProfile')
-         ->name('users.profile-store'); 
+    Route::get('users/detail', 'ApplicantController@showProfile')
+        ->name('profile.show');  
 
-    Route::get('users/{id}/profile/info', 'UserController@showProfile')
-        ->name('users.profile-show'); 
-
-    Route::get('users/home', 'UserController@index')
-        ->name('users.index');
-
-    Route::put('users/{id}/upload', 'UserController@uploadCV')
-        ->name('users.upload');
+    Route::put('users/upload', 'ApplicantController@uploadCV')
+        ->name('cv.upload');   
         
 });
 
@@ -48,8 +40,8 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::get('dashboard', 'AdminController@index')
         ->name('admin.index');
     
-    Route::get('user-management', 'UserController@userManage')
-        ->name('user-management.manage');
+    Route::get('account-management', 'UserController@index')
+        ->name('account.index');
 
     Route::get('applicant-profile/{id}', 'AdminController@showProfile')
     ->name('applicant.profile');
@@ -73,7 +65,6 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     
   
     // Route::resource('admin', 'AdminController');
-    // Route::resource('user-management', 'UserController');
 
 });
 

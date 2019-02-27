@@ -11,10 +11,10 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ route('guest.home') }}">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     <img src={{ asset('img/1.jpg')}} height='50px'>                   
                 </a>
-                <a class="navbar-brand" href="{{ route('guest.home') }}">        
+                <a class="navbar-brand" href="{{ route('home') }}">        
                     Technolo<span style="color:orange">Geek</span>
                 </a>
             </div>
@@ -32,9 +32,9 @@
                         
                     @guest
                         {{-- <li><a href="{{ route('login') }}">Login</a></li> --}}
-                        <li><a href="{{ route('guest.home') }}">
+                        <li><a href="{{ route('home') }}">
                             <i class="fa fa-home"></i> Home</a></li>
-                        <li><a href=#loginModal class="login-modal" data-toggle="modal" 
+                        <li><a id="btnLogin" href=#loginModal class="login-modal" data-toggle="modal" 
                             data-target="#loginModal">
                             <i class="fa fa-unlock"></i> Login</a>                       
                         <li><a href="{{ route('register') }}">
@@ -43,7 +43,7 @@
                     <li><a href="{{ route('home') }}">
                             <i class="fa fa-home"></i> Home</a></li>                           
                         @if(Auth::user()->role_id == '1')
-                            <li><a href="{{ route('user-management.manage') }}">
+                            <li><a href="{{ route('account.index') }}">
                                 <i class="fa fa-users"></i> Kelola User</a></li>
                         @endif
 

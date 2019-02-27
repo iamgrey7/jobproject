@@ -295,12 +295,9 @@ $('.modal-footer').on('click', '.edit', function() {
         type: 'PUT',
         url: 'users/edit/'+id,
         data: {
-            '_token': $('input[name=_token]').val(),
-            'id': id,
-            'username': $('#username_edit').val(),
-            'email': $('#email_edit').val(),
-            'role_id': $('#role_edit option:selected').val(),
-            'status_id': $('#status_edit option:selected').val(),
+            '_token': $('input[name=_token]').val(),                     
+            'email': $('#email').val(),
+            'password': $('#password').val(),            
         },
         success: function(data) {
             // toastr.success('Berhasil update artikel ..', 'Success Alert', {timeOut: 5000});

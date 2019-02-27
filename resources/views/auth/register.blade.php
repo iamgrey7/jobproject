@@ -68,7 +68,7 @@
 
                             <div class="col-md-6">
                                 <input id="dob" type="date" class="form-control" name="dob" required
-                                min="1950-01-01">
+                                min="1950-01-01" value="{{ old('dob') }}">
                                 
                                 @if ($errors->has('dob'))
                                     <span class="help-block">

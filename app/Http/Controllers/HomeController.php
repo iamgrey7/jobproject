@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\User;
 use App\UserProfile;
@@ -26,36 +27,40 @@ class HomeController extends Controller
     }
 
     public function index(Request $request)
-    {
-        $this->middleware('auth');
-        
-        $role = $request->user()->role;
+    {             
+        //jika sudah login
+        if (Auth::check()) {
 
-        // if role = admin
-        if ($request->user()->hasRole('admin')) {
+             // if role = admin
+            if ($request->user()->hasRole('admin')) {
 
-            return redirect()->route('admin.index');           
-           
-        // if role = user 
-        } elseif ($request->user()->hasRole('user')) {
+                return redirect()->route('admin.index');           
             
-            //jika user belum mengisi profil
-            $id = $request->user()->id; 
-            $email = $request->user()->email;
-            $user = User::leftJoin('user_profiles', 'users.id', 
-                '=', 'user_profiles.user_id', 'left_outer')
-                ->where('email', '=', $email)
-                ->getQuery()
-                ->first();
-            if ($user->first_name == NULL) {
-                return redirect()->route('users.profile-form', $id);                  
-            } elseif ($user->first_name !== NULL) {
-                return redirect()->route('users.index', $user->id);                    
-            }
-            
+            // if role = user 
+            } elseif ($request->user()->hasRole('user')) {
+                
+                //jika user belum mengisi profil
+                $id = $request->user()->id; 
+                $Profile = UserProfile::where('user_id', '=', $id);
+                $user = User::with(['profile', 'profile.cvStatus'])
+                    ->find($id); 
+               
+                if (!$Profile->exists()) {
+                    return view('applicant.form-detail')
+                        ->with('id', $id); 
+                // } else {
+                } elseif ($user->profile->first_name !== NULL) {
+                    return view('applicant.dashboard')                    
+                        ->with('user', $user);              
+                }
+            } 
+
+        // jika belum login
         } else {
-            return redirect('home.homepage');
-        }       
+            return view('home.homepage');
+        }
+
+           
     }
 
 

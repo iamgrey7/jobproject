@@ -48,15 +48,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'required' => ':attribute harus diisi',
+            'unique' => ':attribute sudah ada, harap isi :attribute yang lain',
+            'before' => 'Umur anda minimal 17 tahun untuk mendaftar',
+            'min' => ':attribute harus minimal :min karakter'
+        ];
+        
         return Validator::make($data, [
             'username' => 'required|string|max:255|unique:users,username',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            // 'first_name' => 'required|string|max:255',
-            // 'last_name' => 'string|max:255',
-            // 'dob' => 'required|date|before:'.Carbon::now()->subYears(17),
+            'password' => 'required|string|min:5|confirmed',
             'dob' => 'required|date|before:17 years ago',
-        ]);
+        ], $messages);
     }
  
 
@@ -76,7 +80,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),            
             'dob' => $data['dob'],
             'role_id' => '2',
-            'status' => 0,
+            'status_id' => 1,
             'has_filled_profile' => 'false',
             'path_foto' => '',            
         ]);

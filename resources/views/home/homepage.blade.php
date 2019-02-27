@@ -52,8 +52,14 @@
 @endsection
 
 @section('script')
-<script>
-    
+
+
+<script type="text/javascript">
+
+
+
 </script>
+
+
 
 @endsection

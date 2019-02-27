@@ -10,16 +10,17 @@
                 </div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action={{ route('users.profile-store', $id) }}>
+                    <form class="form-horizontal" method="POST" action={{ route('profile.store') }}>
                         {{ csrf_field() }}
 
-                        <input class="form-control" type="hidden" id="user_id" name="user_id" value={!! $id !!}>
+                        <input class="form-control" type="hidden" id="user_id" name="user_id" value={{ $id }}>
                         
                         <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                             <label for="first_name" class="col-md-4 control-label">Nama Depan</label>
 
                             <div class="col-md-6">
-                                <input id="first_name" type="text" class="form-control" name="first_name" required>
+                                <input id="first_name" type="text" class="form-control" 
+                                name="first_name" value="{{ old('first_name') }}" required>
 
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
@@ -34,7 +35,8 @@
                             <label for="last_name" class="col-md-4 control-label">Nama Belakang</label>
 
                             <div class="col-md-6">
-                                <input id="last_name" type="text" class="form-control" name="last_name">
+                                <input id="last_name" type="text" class="form-control" 
+                                name="last_name" value="{{ old('last_name') }}">
 
                                 @if ($errors->has('last_name'))
                                     <span class="help-block">
@@ -48,7 +50,7 @@
                             <label for="gender" class="col-md-4 control-label">JK</label>
 
                             <div class="col-md-6">
-                                <select id="gender" class="form-control" name="gender">
+                                <select id="gender" class="form-control" name="gender">                                
                                     <option value="Pria">Pria</option>
                                     <option value="Wanita">Wanita</option>                                    
                                 </select>
@@ -66,7 +68,8 @@
                             <label for="phone" class="col-md-4 control-label">No Telp</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="text" class="form-control" name="phone" required>
+                                <input id="phone" type="text" class="form-control" 
+                                name="phone" value="{{ old('phone') }}" required>
 
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
@@ -81,7 +84,8 @@
                             <label for="address" class="col-md-4 control-label">Alamat</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control" name="address" required>
+                                <input id="address" type="text" class="form-control" 
+                                name="address" value="{{ old('address') }}" required>
 
                                 @if ($errors->has('address'))
                                     <span class="help-block">

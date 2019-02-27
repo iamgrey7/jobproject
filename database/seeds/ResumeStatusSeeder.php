@@ -14,7 +14,7 @@ class ResumeStatusSeeder extends Seeder
     public function run()
     {
         $unread = new ResumeStatus;       
-        $unread->status_desc = 'Unread';
+        $unread->status_desc = 'Belum Diproses';
         $unread->save();
 
         $processed = new ResumeStatus;        
