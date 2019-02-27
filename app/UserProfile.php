@@ -14,15 +14,15 @@ class UserProfile extends Model
         'address', 'cv_path' , 'cv_status'
     ];
 
-    // Relasi 1 user hanya memiliki 1 profile
+    // Relationships
     public function user() 
     { 
-        return $this->belongsTo(User::class); 
+        return $this->belongsTo(User::class, 'user_id'); 
     }
 
     public function cvStatus() 
     { 
-        return $this->belongsTo(ResumeStatus::class); 
+        return $this->belongsTo(ResumeStatus::class, 'cv_status'); 
     }
  
 

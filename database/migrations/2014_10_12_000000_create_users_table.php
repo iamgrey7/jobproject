@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->date('dob');
-            $table->integer('status')->default('0');
+            $table->integer('status_id')->default('1');
             $table->integer('role_id');
             // $table->boolean('has_filled_profile')->default(false);
             $table->string('path_foto')->nullable();

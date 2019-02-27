@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         $admin->email = 'admin@gmail.com';
         $admin->password = bcrypt('admin');
         $admin->dob = '2019/01/01';
-        $admin->status = '0';
+        $admin->status_id = '1';
         $admin->role_id = '1';        
         $admin->path_foto = '';
         $admin->save();
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
         $grey->email = 'grey@gmail.com';
         $grey->password = bcrypt('admin');
         $grey->dob = '2019/01/01';
-        $grey->status = '0';
+        $grey->status_id = '1';
         $grey->role_id = '2';        
         $grey->path_foto = '';
         $grey->save(); 
@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
         $user->email = 'user@gmail.com';
         $user->password = bcrypt('admin');
         $user->dob = '2019/01/01';
-        $user->status = '0';
+        $user->status_id = '1';
         $user->role_id = '2';      
         $user->path_foto = '';
         $user->save();  

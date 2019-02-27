@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Role;
 use App\UserProfile;
+use App\Status;
 
 class User extends Authenticatable
 {
@@ -32,20 +33,29 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // Relasi 1 user hanya memiliki 1 role
+    // Relationships
     public function role() 
     { 
-        return $this->belongsTo(Role::class); 
+        return $this->belongsTo(Role::class, 'role_id'); 
     }
+
+    public function status() 
+    { 
+        return $this->belongsTo(Status::class, 'status_id'); 
+    }
+
 
     public function profile() 
     { 
         return $this->hasOne(UserProfile::class, 'user_id'); 
     }
 
+
     //function pengecekan role user
     public function hasRole($role) 
     { 
         return null !== $this->role()->where('role_name', $role)->first();
     }
+
+
 }

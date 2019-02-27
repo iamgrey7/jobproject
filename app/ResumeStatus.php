@@ -10,11 +10,11 @@ class ResumeStatus extends Model
     protected $fillable = [
         'status_desc'
     ];
-
-    // 1 role dapat dimiliki oleh banyak user
+    
+    // Relationships
     public function userProfiles() 
     { 
-        return $this->hasMany(UserProfile::class); 
+        return $this->hasMany(UserProfile::class, 'cv_status'); 
     }
 
     

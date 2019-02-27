@@ -13,7 +13,6 @@
 
 
 //homepage website
-// Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/homepage', 'HomeController@home')->name('guest.home');
@@ -28,14 +27,19 @@ Route::group(['middleware' => ['auth','role:user','profile']], function () {
     //Route::resource('users', 'UserController');     
     Route::get('users/{id}/profile', 'UserController@showFormProfile')
         ->name('users.profile-form');
+
     Route::post('users/{id}/profile', 'UserController@storeProfile')
          ->name('users.profile-store'); 
+
     Route::get('users/{id}/profile/info', 'UserController@showProfile')
-        ->name('users.profile-show');   
+        ->name('users.profile-show'); 
+
     Route::get('users/home', 'UserController@index')
         ->name('users.index');
+
     Route::put('users/{id}/upload', 'UserController@uploadCV')
         ->name('users.upload');
+        
 });
 
 //check role route admin
@@ -56,8 +60,18 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::get('download/{file}', 'AdminController@download')
         ->name('download.cv');
 
+    Route::post('users/create', 'UserController@storeUser')
+        ->name('users.create');
+    
+    Route::put('users/edit/{id}', 'UserController@update')
+        ->name('users.edit');
+
+    Route::delete('users/delete/{id}', 'UserController@destroy')
+        ->name('users.delete');
+
 
     
+  
     // Route::resource('admin', 'AdminController');
     // Route::resource('user-management', 'UserController');
 

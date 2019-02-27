@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 
-class Role extends Model
+class Status extends Model
 {
     protected $fillable = [
-        'role_name', 'description'
+        'acc_status'
     ];
 
     // Relationships
     public function users() 
     { 
-        return $this->hasMany(User::class, 'role_id'); 
+        return $this->hasMany(User::class, 'status_id'); 
     }
-    
+
 }

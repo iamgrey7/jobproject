@@ -124,17 +124,10 @@ class AdminController extends Controller
 
     public function download(Request $request)
     {        
-        $path = $request->input('path');
+        $path = $request->input('path');       
 
         return response()->download(public_path($path));
 
-        // $path = '../storage/app/cv.pdf';
-        // // $name = basename($file);
-        // $name = 'cv.pdf';
-        // return response()->download($file, $name);   
-        
-        
-        // return Storage::download('cv.pdf', 'cv.pdf');
     }
 
     // public function download($file)
