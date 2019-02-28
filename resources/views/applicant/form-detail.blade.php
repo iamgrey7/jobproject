@@ -4,9 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-info" role="alert">
+                <strong>
+                    Sebelum melanjutkan, silakan Isi Informasi Akun Anda terlebih dahulu..
+                </strong>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                   Sebelum melanjutkan, silakan Isi Informasi Akun Anda
+                   Informasi user
                 </div>
 
                 <div class="panel-body">

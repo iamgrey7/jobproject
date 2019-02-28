@@ -61,8 +61,6 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::post('users/delete', 'UserController@destroy')
         ->name('users.delete');
 
-
-    
   
     // Route::resource('admin', 'AdminController');
 

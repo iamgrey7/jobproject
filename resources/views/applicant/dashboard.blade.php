@@ -5,6 +5,26 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
 
+            @if ($user->profile->cv_status == "1") 
+            <div class="alert alert-success" role="alert">
+                Anda dapat mengupload CV anda sebanyak satu kali, dan 
+                mengupload kembali apabila status CV anda <b>Ditolak</b>
+            </div>
+            @endif
+
+            @if ($user->profile->cv_status == "3") 
+            <div class="alert alert-success" role="alert">
+                Selamat CV anda telah kami periksa dan Anda telah <b>Diterima</b>
+            </div>
+            @endif
+
+            @if ($user->profile->cv_status == "4") 
+            <div class="alert alert-danger" role="alert">
+                Mohon maaf, Lamaran anda <b>Ditolak</b> silakan 
+                mengupload kembali CV anda ..
+            </div>
+            @endif
+
             {{-- tampilkan upload jika belum upload cv atau reject --}}
             @if($user->profile->cv_path == NULL || $user->profile->cv_status == "4")
             <div class="panel panel-default">
@@ -46,8 +66,21 @@
                 <div class="panel-heading">Status CV</div>
 
                 <div class="panel-body"> 
-                   Status CV Anda adalah : 
-                   <span style="color:orange"><strong> {{ $user->profile->cvStatus->status_desc }} </strong></span>
+                    Status CV Anda adalah :
+                    @if ($user->profile->cv_status == "1")  
+                    <span style="color:orange"><strong> 
+                    @endif    
+                    @if ($user->profile->cv_status == "3")  
+                    <span style="color:green"><strong> 
+                    @endif   
+                    @if ($user->profile->cv_status == "4")  
+                    <span style="color:red"><strong> 
+                    @endif   
+                    
+
+                       {{ $user->profile->cvStatus->status_desc }} 
+                   
+                    </strong></span>
                 </div>                    
             </div>
 

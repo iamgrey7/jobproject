@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
         $admin->dob = '2019/01/01';
         $admin->status_id = '1';
         $admin->role_id = '1';        
-        $admin->path_foto = '';
+        $admin->path_foto = 'uploads/foto/1.jpg';
         $admin->save();
 
         $grey = new User;
@@ -36,8 +36,18 @@ class UsersTableSeeder extends Seeder
         $grey->dob = '2019/01/01';
         $grey->status_id = '1';
         $grey->role_id = '2';        
-        $grey->path_foto = '';
+        $grey->path_foto = 'uploads/foto/2.jpg';
         $grey->save(); 
+
+        $dummy = new User;
+        $dummy->username = 'luqman';
+        $dummy->email = 'luqman@gmail.com';
+        $dummy->password = bcrypt('admin');
+        $dummy->dob = '2019/01/01';
+        $dummy->status_id = '1';
+        $dummy->role_id = '2';      
+        $dummy->path_foto = 'uploads/foto/3.jpg';
+        $dummy->save();  
         
         $user = new User;
         $user->username = 'user';
@@ -46,7 +56,9 @@ class UsersTableSeeder extends Seeder
         $user->dob = '2019/01/01';
         $user->status_id = '1';
         $user->role_id = '2';      
-        $user->path_foto = '';
+        $user->path_foto = 'uploads/foto/4.jpg';
         $user->save();  
+
+
     }
 }

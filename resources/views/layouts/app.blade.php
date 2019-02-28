@@ -13,7 +13,9 @@
 
     <!-- CSS -->    
     <link href="{{ asset('fa/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('toastr/build/toastr.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
    
 </head>
 <body>
@@ -28,6 +30,7 @@
     
 
     <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('toastr/build/toastr.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     {{-- <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script> --}}
    

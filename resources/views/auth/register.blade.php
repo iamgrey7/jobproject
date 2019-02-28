@@ -8,7 +8,9 @@
                 <div class="panel-heading">Daftar</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" method="POST">
+                            {{-- action="{{ route('register') }}"> --}}
+                        
                         {{ csrf_field() }}
 
                         
@@ -81,7 +83,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="btnSubmit" type="submit" class="btn btn-primary">
                                     Register
                                 </button>
                             </div>
@@ -107,5 +109,25 @@
 //          endDate:'today'
 //         });
 //     });
+
+
+$(document).on('click', '#btnSubmit', function(e) {
+    $.ajax({
+        type: 'POST',
+        url : 'register/',        
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'username': $('#username').val(),
+            'email': $('#email').val(),
+            'password': $('#password').val(),
+            'dob' : $('#dob').val(),            
+        },
+        success: function(data) {
+            // 
+        }, error: function(data) {
+            toastr.error('Validasi error, cek kembali input anda!', 'Error', {timeOut: 5000});                         
+        }
+    });
+});
 </script>
 @endsection

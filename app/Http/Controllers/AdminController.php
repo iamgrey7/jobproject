@@ -47,9 +47,10 @@ class AdminController extends Controller
         $user = UserProfile::where('user_id', '=', $id)
             ->update([
                 'cv_status' => "$status" 
-            ]);
+            ]);        
+
+        // return response()->json();
         
-        return response()->json();
     }
 
     public function download(Request $request)

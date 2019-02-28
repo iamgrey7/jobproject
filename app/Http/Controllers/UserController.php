@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+
 use DB;
 
 use App\UserProfile;
@@ -28,7 +30,8 @@ class UserController extends Controller
             User::with(['role', 'status'])
                 ->where('username', 'like', '%'.$request->keywords.'%') 
                 ->orWhere('email', 'like', '%'.$request->keywords.'%')
-                ->paginate(10);
+                ->get();
+                // ->paginate(10);
 
             $request->keywords == '' ? $keywords = '' : $keywords = $request->keywords; 
             
@@ -43,8 +46,8 @@ class UserController extends Controller
                 'status' => 'success']); 
         } else {             
             $users = 
-            User::with(['role', 'status'])
-                ->paginate(10);
+            User::with(['role', 'status'])->get();
+                // ->paginate(10);
 
             return view('user.index')->with('users', $users); 
         }
@@ -77,7 +80,7 @@ class UserController extends Controller
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $request->password,            
+            'password' => bcrypt($request->password),            
             'dob' => $request->dob,            
             'role_id' => $request->role_id,
             'status_id' => 1,
@@ -97,27 +100,22 @@ class UserController extends Controller
 
 
     public function update(Request $request, $id)
-    {        
+    {                
         $messages = [
             'required' => ':attribute harus diisi',
-            'unique' => ':attribute sudah ada, harap isi :attribute yang lain',
-            'before' => 'Umur anda minimal 17 tahun untuk mendaftar',
-            'min' => ':attribute harus minimal :min karakter'                    
+            'unique' => ':attribute sudah ada, harap isi :attribute yang lain',                             
         ];
         
         $rules = [         
-            'username' => 'required|string|max:255|unique:users,username',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:5',
-            'dob' => 'required|before:17 years ago',
-            'role_id' => 'required'
+            'username' => 'required|string|unique:users,username,'.$id.',id',
+            'email' => 'required|string|email|unique:users,email,'.$id.',id',
         ];    
-        
+
         $validation = Validator::make($request->all(), $rules, $messages);
-        if($validation->fails()) {
-            return redirect()->back()
-            ->withInput()
-            ->withErrors($validation);            
+        if($validation->fails()) {           
+            return withInput()
+            ->withErrors($validation); 
+
         }
 
         $user = User::find($id);

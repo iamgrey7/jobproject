@@ -167,8 +167,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" method="POST">
-                    {{-- {{ csrf_field() }}
-                    {{method_field('PUT')}} --}}
+                    {{-- {{ csrf_field() }} --}}
+                    {{-- {{method_field('PUT')}} --}}
 
                     <input name="_method" type="hidden" value="PUT">
                     <input type="hidden" class="form-control" id="id_edit">
@@ -234,9 +234,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form" method="POST">
-                        {{-- {{ csrf_field() }}
-                        {{ method_field('DELETE') }} --}}
-
+                      
                         {{-- <input name="_method" type="hidden" value="DELETE"> --}}
                         <input type="hidden" class="form-control" id="id_delete">
                         <h5>Anda yakin akan menghapus data User :
@@ -318,14 +316,12 @@ $('.modal-footer').on('click', '.add', function(e) {
             'dob' : $('#dob_add').val(),
             'role_id': $('#role_add option:selected').val(),
         },
-        success: function(data) { 
+        success: function(data) {
+            toastr.success('Berhasil menambahkan user !', 'Sukses', {timeOut: 5000});            
             $('#table-content').html(data['view']);
             $("#formAdd")[0].reset();
         }, error: function(data) {
-            alert('Validasi gagal, silakan coba lagi');            
-            // $('#addModal').modal('show');
-            // $('.btnAdd').click();
-            
+            toastr.error('Validasi error, cek kembali input anda!', 'Error', {timeOut: 5000});                         
         }
     });
 });
@@ -349,7 +345,7 @@ $('.modal-footer').on('click', '.edit', function() {
     $.ajax({
         type: 'PUT',
         url: 'users/update/'+id,
-        data: {
+        data: {            
             '_token': $('input[name=_token]').val(), 
             'id' : id, 
             'username' : $('#username_edit').val(),                    
@@ -358,10 +354,10 @@ $('.modal-footer').on('click', '.edit', function() {
             'status_id': $('#status_edit option:selected').val(),            
         },
         success: function(data) {
-            // toastr.success('Berhasil update artikel ..', 'Success Alert', {timeOut: 5000});
+            toastr.success('Berhasil update data user', 'Sukses', {timeOut: 5000});
             $('#table-content').html(data['view']);
         }, error: function(data) {
-            alert('Validasi gagal, silakan coba lagi');  
+            toastr.error('Validasi error, cek kembali input anda!', 'Error', {timeOut: 5000});                         
         } 
     });
 });
@@ -384,6 +380,7 @@ $('.modal-footer').on('click', '.delete', function() {
             'id': id,                                                                                                    
         },
         success: function(data) {
+            toastr.success('Data user dihapus', 'Sukses', {timeOut: 5000});
             $('#table-content').html(data['view']);
         }
     });
