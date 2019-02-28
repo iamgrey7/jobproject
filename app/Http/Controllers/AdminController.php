@@ -18,91 +18,21 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $users = 
-            UserProfile::join('resume_statuses', 'user_profiles.cv_status', 
-                '=', 'resume_statuses.id')
-            ->where('cv_status', '=',"1" )
-            ->orWhere('cv_status', '=',"2" )
-            ->getQuery()
-            ->get();
-       
+        $users = UserProfile::with(['cvStatus'])
+                    ->whereIn('cv_status', ['1','2'])                
+                    ->where('cv_path', '!=', NULL)                
+                    ->get();
+
         return view('admin.index', ['users' => $users]); 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function showProfile($id)
     {   
         $user =  User::find($id);
-        $profile = UserProfile::where('user_id','=', $id)
-            ->join('users', 'user_profiles.user_id', '=', 'users.id')
-            ->getQuery()
+        $profile =  UserProfile::with('user')
+            ->where('user_id','=', $id)
             ->first();
-
+           
         return view('admin.cv-show')
             ->with('user', $profile)
             ->with('id', $id); 

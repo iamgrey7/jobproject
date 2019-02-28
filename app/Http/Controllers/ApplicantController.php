@@ -77,7 +77,7 @@ class ApplicantController extends Controller
     {        
         $messages = [
             'required' => 'Pilih CV yang akan di upload',
-            'max' => 'Ukuran file maksimum 2Mb',
+            'max' => 'Ukuran file maksimum 1Mb',
             'mimes' => 'File harus berekstensi .PDF',
         ];
         $rules = [            
@@ -102,8 +102,17 @@ class ApplicantController extends Controller
             $file = NULL;
         }
 
+        // reset status cv ke unread jika sebelumnya reject
+        if ($profile->cv_status == "4"){
+            $profile->cv_status = "1";
+        }
+
         $profile->cv_path = $file;
         $profile->save();
+
+        // return response()->json([
+        //     'test' => $users,
+        //     'status' => 'success']); 
         
         return redirect()->route('home');
     }

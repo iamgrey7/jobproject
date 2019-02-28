@@ -35,5 +35,5 @@
     </tbody>
 </table> 
 <div class="">
-    {{-- {{ $users->render() }} --}}
+    {{-- {{ $users->links() }} --}}
 </div>

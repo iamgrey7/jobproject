@@ -38,11 +38,8 @@ Route::group(['middleware' => ['auth','role:user']], function () {
 Route::group(['middleware' => ['auth','role:admin']], function () {
 
     Route::get('dashboard', 'AdminController@index')
-        ->name('admin.index');
-    
-    Route::get('account-management', 'UserController@index')
-        ->name('account.index');
-
+        ->name('admin.index');  
+   
     Route::get('applicant-profile/{id}', 'AdminController@showProfile')
     ->name('applicant.profile');
 
@@ -52,11 +49,14 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::get('download/{file}', 'AdminController@download')
         ->name('download.cv');
 
+    Route::get('account-management', 'UserController@index')
+    ->name('account.index');
+
     Route::post('users/create', 'UserController@storeUser')
         ->name('users.create');
     
-    Route::put('users/edit/{id}', 'UserController@update')
-        ->name('users.edit');
+    Route::put('users/update/{id}', 'UserController@update')
+        ->name('account.update');
 
     Route::delete('users/delete/{id}', 'UserController@destroy')
         ->name('users.delete');

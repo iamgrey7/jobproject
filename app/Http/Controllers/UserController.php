@@ -38,15 +38,15 @@ class UserController extends Controller
             
             return response()->json([
                 'view' => $view,                 
-                'keywords' => $keywords, 
-                'test' => $users,
+                // 'keywords' => $keywords, 
+                // 'test' => $users,
                 'status' => 'success']); 
         } else {             
             $users = 
             User::with(['role', 'status'])
                 ->paginate(10);
 
-            return view('user.manage')->with('users', $users); 
+            return view('user.index')->with('users', $users); 
         }
     }
 
@@ -76,12 +76,22 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {        
-        $user = User::find($id)->update([
-            'username' => $request->username,
-            'email' => $request->email,               
-            'role_id' => $request->role_id,
-            'status_id' => $request->status_id,            
-        ]);
+        // $user = User::find($request->user()->id)->update([
+        // // $user = User::find($id)->update([
+        //     'username' => $request->username,
+        //     'email' => $request->email,
+        //     'status_id' => $request->status_id,                
+        //     'role_id' => $request->role_id,                       
+        // ]);
+
+        $user = User::find($id);
+        $user->username = $request->username;        
+        $user->email = $request->email;
+        $user->status_id = $request->status_id;                
+        $user->role_id = $request->role_id;   
+        $user->save();
+
+
         //refresh table setelah update
         $table = User::with(['role', 'status'])->paginate(10);
 

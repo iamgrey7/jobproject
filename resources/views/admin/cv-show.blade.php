@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-10">
                         <h3>{{ $user->first_name}} {{$user->last_name}}</h3>
-                        <h5><i class="fa fa-envelope"></i> {{ $user->email }}</h5>
+                        <h5><i class="fa fa-envelope"></i> {{ $user->user->email }}</h5>
                         <h5><i class="fa fa-map-marker"></i> {{ $user->address }}</h5>
                     </div>
 
@@ -45,6 +45,8 @@
 
                     <a href="" id="btnReject" type="button" class="btnReject btn btn-danger">
                         <i class="fa fa-times"></i> Reject Lamaran</a>
+
+                    {{-- <a href={{ asset($user->cv_path) }} target=_new>pdf</a> --}}
 
                 </div>                
             </div>                 
@@ -144,6 +146,8 @@ $(document).ready(function(){
             },
         });
     }); 
+    
+    
 
 
 

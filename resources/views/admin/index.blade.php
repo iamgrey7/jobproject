@@ -45,7 +45,7 @@
                             <th>Upload CV</th>
                             <th>Operasi</th>
                         </tr>
-                        {{ csrf_field() }}
+                        {{-- {{ csrf_field() }} --}}
                     </thead>
                     <tbody id="table-content">
                        

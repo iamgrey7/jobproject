@@ -41,17 +41,20 @@
                             <th>Status</th>  
                             <th>Operasi</th>
                         </tr>
-                        {{ csrf_field() }}
+                        {{-- {{ csrf_field() }} --}}
                     </thead>
                     <tbody id="table-content">
                        
                     @include("user.list") 
 
+                    
+
                 
-            </div><!-- /.panel-body -->
+            </div><!-- /.panel-body -->            
         </div><!-- /.panel panel-default -->
     </div><!-- /.col-md-8 -->
 
+    
 </div>
 
 <!-- Modal form untuk menambah data user -->
@@ -64,7 +67,7 @@
             </div>
             <div class="modal-body">                
                 <form class="form-horizontal" role="form" method="POST">
-                   {{ csrf_field() }}
+                   {{-- {{ csrf_field() }} --}}
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="username_add">Username:</label>
                         <div class="col-sm-9">
@@ -130,8 +133,11 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                 
+                <form class="form-horizontal" role="form" method="POST">
+                    {{-- {{ csrf_field() }}
+                    {{method_field('PUT')}} --}}
+
+                    <input name="_method" type="hidden" value="PUT">
                     <input type="hidden" class="form-control" id="id_edit">
                  
                     <div class="form-group">
@@ -150,8 +156,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="role_edit">Hak Akses:</label>
-                        <div class="col-sm-9">
-                            {{-- <input class="form-control" id="role_edit" > --}}
+                        <div class="col-sm-9">                            
                             <select class="form-control" id="role_edit" name="role_edit">
                                 <option value="1">Admin</option> 
                                 <option value="2">User</option> 
@@ -161,8 +166,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="status_edit">Status</label>
-                        <div class="col-sm-9">
-                            {{-- <input class="form-control" id="status_edit" > --}}
+                        <div class="col-sm-9">                            
                             <select class="form-control" id="status_edit">
                                 <option value="1">Aktif</option> 
                                 <option value="2">Suspend</option>
@@ -197,8 +201,8 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
+                        {{-- {{ csrf_field() }}
+                        {{ method_field('DELETE') }} --}}
                         <input type="hidden" class="form-control" id="id_delete">
                         <h5>Anda yakin akan menghapus data User :
                         <strong><span id="nama_user"></span></strong> 
@@ -237,7 +241,7 @@ function debounce(fn, duration) {
 
 $('#keywords').on('keyup', debounce(function(){ 
     $.ajax({ 
-        route : 'user.management.manage', 
+        route : 'account.index', 
         type : 'GET', 
         dataType : 'json', 
         data : { 
@@ -259,7 +263,7 @@ $(document).on('click', '.btnAdd', function() {
 });
 $('.modal-footer').on('click', '.add', function() {     
     $.ajax({
-        type: 'POST',
+        type: 'PUT',
         url : 'users/create',        
         data: {
             '_token': $('input[name=_token]').val(),
@@ -293,11 +297,14 @@ $(document).on('click', '.edit-modal', function() {
 $('.modal-footer').on('click', '.edit', function() {
     $.ajax({
         type: 'PUT',
-        url: 'users/edit/'+id,
+        url: 'users/update/'+id,
         data: {
-            '_token': $('input[name=_token]').val(),                     
-            'email': $('#email').val(),
-            'password': $('#password').val(),            
+            '_token': $('input[name=_token]').val(), 
+            'id' : id, 
+            'username' : $('#username_edit').val(),                    
+            'email': $('#email_edit').val(),            
+            'role_id': $('#role_edit option:selected').val(),
+            'status_id': $('#status_edit option:selected').val(),            
         },
         success: function(data) {
             // toastr.success('Berhasil update artikel ..', 'Success Alert', {timeOut: 5000});

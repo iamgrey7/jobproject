@@ -5,13 +5,7 @@
                 <td>{{$user->user_id}}</td>
                 <td>{{$user->first_name}}</td>
                 <td>{{$user->address}}</td>
-                <td>{{$user->status_desc}}</td>
-         
-                {{-- <td class='text-center'><input type="checkbox" class="permanent" 
-                    data-id="{{$user->user_id}}" 
-                     @if ($user->has_filled_profile) checked @endif                    
-                ></td> --}}
-
+                <td>{{$user->cvStatus->status_desc}}</td>
                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', 
                     $user->updated_at)->diffForHumans() }}
                 </td>
@@ -23,12 +17,12 @@
                                    --}}
                 <a class="btn btn-primary" type="button" href={{ route('applicant.profile', $user->user_id) }}>
                     <i class="fa fa-file-text"></i> Proses</a>
-            </td>
+                </td>
             </tr>
         @endforeach
         </div>
     </tbody>
 </table> 
 <div class="">
-    {{-- {{ $users->render() }} --}}
+    {{-- {{ $users->links () }} --}}
 </div>
