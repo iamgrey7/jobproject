@@ -44,11 +44,11 @@ class ApplicantController extends Controller
     {
         $messages = [
             'required' => 'Kolom ini harus diisi',
-            'integer' => 'Nomor Telepon harus berupa angka',           
+            'numeric' => 'Nomor Telepon harus berupa angka',           
         ];
         $rules = [            
             'first_name' => 'required',
-            'phone' => 'required|integer',
+            'phone' => 'required|numeric',
             'address' => 'required',
         ];
 

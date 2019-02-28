@@ -16,8 +16,13 @@
                         <h5>Daftar User :</h5> 
                     </div>  
                     <div class='col-md-6'>
-                        <button type='button' class='btnAdd btn btn-success' 
+                        {{-- <button type='button' class='btnAdd btn btn-success' 
                         id='btnAdd' data-toggle="modal" data-target="#addModal">
+                        <i class="fa fa-plus"></i>
+                        Tambah Baru</button> --}}
+
+                        <button type='button' class='btnAdd btn btn-success' 
+                        id='btnAdd'>
                         <i class="fa fa-plus"></i>
                         Tambah Baru</button>
                     </div>                 
@@ -66,47 +71,75 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">                
-                <form class="form-horizontal" role="form" method="POST">
+                <form id="formAdd" class="form-horizontal" role="form" method="POST">
                    {{-- {{ csrf_field() }} --}}
-                    <div class="form-group">
+                   <input name="_method" type="hidden" value="POST">
+
+
+                    <div class="form-group{{ $errors->has('username_add') ? ' has-error' : '' }}" required>
                         <label class="control-label col-sm-3" for="username_add">Username:</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="username_add" autofocus>                                
-                            <p class="errorUserName text-center alert alert-danger hidden"></p>
+                            <input type="text" class="form-control" id="username_add" autofocus>
+                            @if ($errors->has('username_add'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('username_add') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+
+
+
+                    <div class="form-group{{ $errors->has('email_add') ? ' has-error' : '' }}" required>
                         <label class="control-label col-sm-3" for="email_add">Email:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="email_add">                                
-                            <p class="errorEmail text-center alert alert-danger hidden"></p>
+                            <input class="form-control" id="email_add" type="email">                                
+                            @if ($errors->has('email_add'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email_add') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group">
+
+
+                    <div class="form-group{{ $errors->has('password_add') ? ' has-error' : '' }}" required>
                         <label class="control-label col-sm-3" for="password_add">Password:</label>
                         <div class="col-sm-9">
                             <input class="form-control" id="password_add" type="password">                                
-                            <p class="errorPassword text-center alert alert-danger hidden"></p>
+                            @if ($errors->has('password_add'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password_add') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('dob_add') ? ' has-error' : '' }}" required>
                         <label for="dob_add" class="col-sm-3 control-label">Tgl Lahir</label>
                         <div class="col-sm-9">
                             <input id="dob_add" type="date" class="form-control" name="dob_add" required
-                            min="1950-01-01">                            
-                            <p class="errorDob text-center alert alert-danger hidden"></p>                        
+                            min="1950-01-01">
+                            @if ($errors->has('dob_add'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('dob_add') }}</strong>
+                            </span>
+                            @endif                       
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group{{ $errors->has('role_add') ? ' has-error' : '' }}">
                         <label class="control-label col-sm-3" for="role_add">Hak Akses:</label>
                         <div class="col-sm-9">                            
                             <select class="form-control" id="role_add" name="role_add">
                                 <option value="1">Admin</option> 
                                 <option value="2">User</option> 
                             </select>
-                            <p class="errorRole text-center alert alert-danger hidden"></p>
+                            @if ($errors->has('role_add'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('role_add') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>         
                 </form>
@@ -203,12 +236,14 @@
                     <form class="form-horizontal" role="form" method="POST">
                         {{-- {{ csrf_field() }}
                         {{ method_field('DELETE') }} --}}
+
+                        {{-- <input name="_method" type="hidden" value="DELETE"> --}}
                         <input type="hidden" class="form-control" id="id_delete">
                         <h5>Anda yakin akan menghapus data User :
                         <strong><span id="nama_user"></span></strong> 
                         ini ?</h5>
                     </form>
-                    <div class="modal-footer">
+                    <div class="modal-footer footer-add">
                         <button type="button" class="btn btn-danger delete" data-dismiss="modal">
                             <span class='fa fa-check'></span> Konfirmasi
                         </button>
@@ -229,6 +264,12 @@
 
 @section('script')
 <script>
+$(document).ready(function() {
+    
+            
+});
+
+
 
 //function Pencarian dengan keyup delay
 function debounce(fn, duration) {
@@ -258,12 +299,16 @@ $('#keywords').on('keyup', debounce(function(){
 }, 500));
 
 //tambah data User
-$(document).on('click', '.btnAdd', function() {
-    $('.modal-title').text('Tambah Akun User');       
+$(document).on('click', '.btnAdd', function(e) {
+    e.preventDefault();
+    $('.modal-title').text('Tambah Akun User');
+    $('#addModal').modal('show'); 
 });
-$('.modal-footer').on('click', '.add', function() {     
+$('.modal-footer').on('click', '.add', function(e) {  
+    e.preventDefault();       
+
     $.ajax({
-        type: 'PUT',
+        type: 'POST',
         url : 'users/create',        
         data: {
             '_token': $('input[name=_token]').val(),
@@ -275,7 +320,13 @@ $('.modal-footer').on('click', '.add', function() {
         },
         success: function(data) { 
             $('#table-content').html(data['view']);
-        },
+            $("#formAdd")[0].reset();
+        }, error: function(data) {
+            alert('Validasi gagal, silakan coba lagi');            
+            // $('#addModal').modal('show');
+            // $('.btnAdd').click();
+            
+        }
     });
 });
 
@@ -308,9 +359,10 @@ $('.modal-footer').on('click', '.edit', function() {
         },
         success: function(data) {
             // toastr.success('Berhasil update artikel ..', 'Success Alert', {timeOut: 5000});
-            // $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.name + "</td><td>" + data.address + "</td><td class='text-center'><input type='checkbox' class='edit_permanent' data-id='" + data.id + "'></td><td>Right now</td><td><button id='btnShow' class='show-modal btn btn-success' data-id='" + data.id + "' data-name='" + data.name + "' data-address='" + data.address + "'><span class='fa fa-eye'></span> Show</button> <button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "' data-address='" + data.address + "'><span class='fa fa-pencil'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "' data-address='" + data.address + "'><span class='fa fa-trash'></span> Delete</button></td></tr>");
             $('#table-content').html(data['view']);
-        }
+        }, error: function(data) {
+            alert('Validasi gagal, silakan coba lagi');  
+        } 
     });
 });
 // 
@@ -324,14 +376,14 @@ $(document).on('click', '.delete-modal', function() {
 });
 $('.modal-footer').on('click', '.delete', function() {            
     $.ajax({
-        type: "DELETE",                
-        url: "users/delete/" + id, 
+        type: "POST",                
+        url: "users/delete", 
         data: {
-            '_method' : 'delete',
+            // '_method' : 'delete',
             '_token': $('input[name=_token]').val(),
             'id': id,                                                                                                    
         },
-        success: function() {
+        success: function(data) {
             $('#table-content').html(data['view']);
         }
     });

@@ -52,6 +52,28 @@ class UserController extends Controller
 
     public function storeUser(Request $request)
     {
+        $messages = [
+            'required' => ':attribute harus diisi',
+            'unique' => ':attribute sudah ada, harap isi :attribute yang lain',
+            'before' => 'Umur anda minimal 17 tahun untuk mendaftar',
+            'min' => ':attribute harus minimal :min karakter'                    
+        ];
+        
+        $rules = [         
+            'username' => 'required|string|max:255|unique:users,username',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:5',
+            'dob' => 'required|before:17 years ago',
+            'role_id' => 'required'
+        ];    
+
+        $validation = Validator::make($request->all(), $rules, $messages);
+        if($validation->fails()) {           
+            return withInput()
+            ->withErrors($validation); 
+
+        }
+
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
@@ -76,13 +98,27 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {        
-        // $user = User::find($request->user()->id)->update([
-        // // $user = User::find($id)->update([
-        //     'username' => $request->username,
-        //     'email' => $request->email,
-        //     'status_id' => $request->status_id,                
-        //     'role_id' => $request->role_id,                       
-        // ]);
+        $messages = [
+            'required' => ':attribute harus diisi',
+            'unique' => ':attribute sudah ada, harap isi :attribute yang lain',
+            'before' => 'Umur anda minimal 17 tahun untuk mendaftar',
+            'min' => ':attribute harus minimal :min karakter'                    
+        ];
+        
+        $rules = [         
+            'username' => 'required|string|max:255|unique:users,username',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:5',
+            'dob' => 'required|before:17 years ago',
+            'role_id' => 'required'
+        ];    
+        
+        $validation = Validator::make($request->all(), $rules, $messages);
+        if($validation->fails()) {
+            return redirect()->back()
+            ->withInput()
+            ->withErrors($validation);            
+        }
 
         $user = User::find($id);
         $user->username = $request->username;        
@@ -90,7 +126,6 @@ class UserController extends Controller
         $user->status_id = $request->status_id;                
         $user->role_id = $request->role_id;   
         $user->save();
-
 
         //refresh table setelah update
         $table = User::with(['role', 'status'])->paginate(10);
@@ -105,9 +140,10 @@ class UserController extends Controller
     }
 
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request)
     {                
-        User::find($id)->delete();
+        User::find($request->id)->delete();
+        // User::find($request->user()->id)->delete();
 
         //refresh table setelah delete
         $table = User::with(['role', 'status'])->paginate(10);

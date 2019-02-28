@@ -27,9 +27,10 @@
 
     
 
+    <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     {{-- <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script> --}}
-    <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
+   
 
     {{-- section script dari tiap halaman --}}
     @yield('script')

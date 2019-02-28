@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::put('users/update/{id}', 'UserController@update')
         ->name('account.update');
 
-    Route::delete('users/delete/{id}', 'UserController@destroy')
+    Route::post('users/delete', 'UserController@destroy')
         ->name('users.delete');
 
 
