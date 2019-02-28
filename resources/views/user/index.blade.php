@@ -15,7 +15,7 @@
                     <div class='col-md-2'>
                         <h5>Daftar User :</h5> 
                     </div>  
-                    <div class='col-md-6'>
+                    <div class='col-md-4'>
                         {{-- <button type='button' class='btnAdd btn btn-success' 
                         id='btnAdd' data-toggle="modal" data-target="#addModal">
                         <i class="fa fa-plus"></i>
@@ -25,11 +25,29 @@
                         id='btnAdd'>
                         <i class="fa fa-plus"></i>
                         Tambah Baru</button>
-                    </div>                 
-                    <div class='col-md-4'>                        
-                        <input class='form-control' type="text" id="keywords" autocomplete="off">  
+                    </div>  
+                    <div class='col-md-6'>
+                        <label class="control-label col-md-4" for="keywords">
+                            <i class="fa fa-search"></i> Cari User</label>           
+                        <div class='col-md-8'>                        
+                            <input class='form-control' type="text" id="keywords" autocomplete="off">  
+                        </div>
+                       
+                        
+                        {{-- <div class="form-group">
+                            <label class="col-sm-3" for="username_add">Username:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="username_add" autofocus>                           
+                            </div>
+                        </div> --}}
+
                     </div>
-                     
+
+                    
+
+
+
+
                 </div>      
                
             </div>
