@@ -56,6 +56,18 @@
 
 <script type="text/javascript">
 
+$('#btnLogin').on('click', function(e){ 
+    e.preventDefault();   
+
+    $('#username').focus();
+
+
+});
+
+$('#loginModal').on('show', function () {
+   $('input:text:visible:first').focus();
+});
+
 
 
 </script>
